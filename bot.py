@@ -34,8 +34,12 @@ def find_b23_urls(content: str):
 
 
 def access_b23_url_and_return_real_url(url: str):
-    res = requests.get(url, allow_redirects=False)
-    real_url = res.headers['Location']
+    # res = requests.get(url, allow_redirects=False)
+    # real_url = res.headers['Location']
+    # r = urlparse(real_url)
+    # return r.scheme + "://" + r.netloc + r.path
+    res = requests.get(url, allow_redirects=True)
+    real_url = res.url
     r = urlparse(real_url)
     return r.scheme + "://" + r.netloc + r.path
 
@@ -46,10 +50,9 @@ async def remove_b23(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if filtered_b23_url:
         # Construct the reply message
         user_name = update.message.from_user.name
-        user_id = update.message.from_user.id
         url_list = [access_b23_url_and_return_real_url(url.geturl()) for url in filtered_b23_url]
         urls_str = "\n".join(url_list)
-        content = f"用户{user_name}({user_id})分享了B23链接为:\n{urls_str}"
+        content = f"{user_name} 分享了B23链接为:\n{urls_str}"
         # Send the new message
         await context.bot.send_message(chat_id=update.effective_chat.id, text=content)
         # Delete the original message
