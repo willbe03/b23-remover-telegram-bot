@@ -52,7 +52,7 @@ async def remove_b23(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_name = update.message.from_user.name
         url_list = [access_b23_url_and_return_real_url(url.geturl()) for url in filtered_b23_url]
         urls_str = "\n".join(url_list)
-        content = f"{user_name} 分享了B23链接为:\n{urls_str}"
+        content = f"{user_name} 分享了B站链接为:\n{urls_str}"
         # Send the new message
         await context.bot.send_message(chat_id=update.effective_chat.id, text=content)
         # Delete the original message
