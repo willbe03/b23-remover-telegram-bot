@@ -60,7 +60,12 @@ async def remove_b23(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def complete_BV(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    message = update.message.text
+    message = ''
+    if update.message.text:
+        message = update.message.text
+    elif update.message.caption:
+        message = update.message.caption
+
     if message.startswith("BV"):
         await update.message.reply_text(f"https://b23.tv/{message}")
 
